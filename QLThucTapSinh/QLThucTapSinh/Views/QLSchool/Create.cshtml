@@ -1,0 +1,142 @@
+﻿@model QLThucTapSinh.Models.Organization
+@{
+    Layout = null;
+}
+<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+@using (Html.BeginForm())
+{
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "xFilePath" })
+            <a id="SelectImage" onclick="BrowseServer()" href="#">Chọn ảnh</a>
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" }, id = "xFilePath1" })
+            <a id="SelectLogo" onclick="Browse()" href="#">Chọn ảnh</a>
+            @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartDay, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StartDay, new { htmlAttributes = new { @class = "datepicker" } })
+            @Html.ValidationMessageFor(model => model.StartDay, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="reset" value="Reset" class="btn btn-primary" />
+        </div>
+    </div>
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="/Scripts/Plugins/ckfinder/ckfinder.js"></script>
+
+
+<script>
+    $(function () {
+        $('.datepicker').datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            showOn: "both",
+            buttonText: "<i class='fa fa-calendar'></i>"
+        });
+    });
+    function BrowseServer() {
+        // You can use the "CKFinder" class to render CKFinder in a page:
+        var finder = new CKFinder();
+        finder.basePath = '~/ckfinder';	// The path for the installation of CKFinder (default = "/ckfinder/").
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField(fileUrl) {
+        document.getElementById('xFilePath').value = fileUrl;
+    }
+
+    function Browse() {
+        // You can use the "CKFinder" class to render CKFinder in a page:
+        var finder = new CKFinder();
+        finder.basePath = '~/ckfinder';	// The path for the installation of CKFinder (default = "/ckfinder/").
+        finder.selectActionFunction = SetFileField1;
+        finder.popup();
+    }
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField1(fileUrl) {
+        document.getElementById('xFilePath1').value = fileUrl;
+    }
+</script>
