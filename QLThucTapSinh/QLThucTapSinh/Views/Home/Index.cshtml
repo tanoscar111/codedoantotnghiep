@@ -5,6 +5,7 @@
     var com = (List<QLThucTapSinh.Models.Organization>)ViewBag.ListCom;
     var School = (List<QLThucTapSinh.Models.Organization>)ViewBag.ListSchool;
 }
+<link />
 
 @model QLThucTapSinh.Models.Users
 @using (Html.BeginForm("Login", "Home", FormMethod.Post))
@@ -84,7 +85,7 @@
 </section>
 <!-- About Section End -->
 <!-- Classes Section Begin -->
-<section id="congty" class="classes-section spad-3">
+@*<section id="congty" class="classes-section spad-3">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -97,7 +98,7 @@
             @foreach (var item in com)
             {
                 <div class="col-lg-4">
-                    <div class="single-class-item set-bg">
+                    <div class="single-class-item ">
                         <img src="@item.Logo" alt="">
                         <div class="si-text">
                             <h4>@item.Name</h4>
@@ -108,7 +109,7 @@
             }
         </div>
     </div>
-</section>
+</section>*@
 <!-- Classes Section End -->
 <!-- Trainer Section Begin -->
 <section id="dreamteam" class="trainer-section spad">
@@ -126,8 +127,8 @@
                     <img src="/img/trainer/trainer-1.jpg" alt="">
                     <div class="trainer-text">
                         <h5>LÊ THANH TÂN</h5>
-                        <span>FULL STACK</span>
-                        <p>university</p>
+                        <span>FRONT END DEVELOPER</span>
+                        <p>Thiết kế giao diện cho toàn bộ sản phẩm</p>
                         <div class="trainer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
@@ -137,10 +138,10 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="single-trainer-item">
-                    <img class="logoteam" src="/img/trainer/trainer-2.jpg" alt="">
+                    <img class="logoteam" src="~/img/trainer/28617145_2032586016965377_3029889264502680104_o.jpg" alt="">
                     <div class="trainer-text">
-                        <h5> </h5>
-                        <span>FRONT END DEVELOPER</span>
+                        <h5>Lê Duẫn</h5>
+                        <span>DOCUMENT</span>
                         <p>
                             non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
                             voluptatem.
@@ -156,10 +157,10 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="single-trainer-item">
-                    <img class="logoteam" src="/img/trainer/trainer-3.jpg" alt="">
+                    <img class="logoteam" src="~/img/trainer/1.jpg" alt="">
                     <div class="trainer-text">
-                        <h5>KÌN PHẠM</h5>
-                        <span>FULL STACK</span>
+                        <h5>MINH TÀI</h5>
+                        <span>BACKEND </span>
                         <p>Duy Tânuniversity</p>
                         <div class="trainer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -173,8 +174,8 @@
         </div>
     </div>
 </section>
-<section id="truonghoc" class="membership-section spad"></section>
-<section class="latest-blog-section spad-3">
+@*<section id="truonghoc" class="membership-section spad"></section>*@
+@*<section class="latest-blog-section spad-3">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -197,4 +198,4 @@
             }
         </div>
     </div>
-</section>
+</section>*@

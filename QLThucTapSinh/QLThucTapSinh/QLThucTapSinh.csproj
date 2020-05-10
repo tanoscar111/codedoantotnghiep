@@ -228,6 +228,7 @@
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\index3.css" />
+    <Content Include="Content\Home\index5.css" />
     <Content Include="Content\Home\nav.css" />
     <Content Include="Content\Home\style.css" />
     <Content Include="Content\Home\styleDangki.css" />
@@ -302,6 +303,7 @@
     <Content Include="img\FPT_New_Logo.png" />
     <Content Include="img\hero-bg.jpg" />
     <Content Include="img\hinhavatar.jpg" />
+    <Content Include="img\icon\daihocdanlapduytan.jpg" />
     <Content Include="img\icon\sort_asc.png" />
     <Content Include="img\icon\sort_asc_disabled.png" />
     <Content Include="img\icon\sort_both.png" />
@@ -311,6 +313,8 @@
     <Content Include="img\logo-duy-tan_vn.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\play.png" />
+    <Content Include="img\trainer\1.jpg" />
+    <Content Include="img\trainer\28617145_2032586016965377_3029889264502680104_o.jpg" />
     <Content Include="img\trainer\about-trainer-2.jpg" />
     <Content Include="img\trainer\about-trainer-3.jpg" />
     <Content Include="img\trainer\trainer-1.jpg" />

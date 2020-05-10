@@ -439,7 +439,7 @@ ul, ol {
 }
 .single-class-item {
 	height: 255px;
-	position: relative;
+	
 	margin-bottom: 30px;
 }
 .single-class-item .si-text {
@@ -2004,12 +2004,13 @@ ul, ol {
     display: inline-block;
     text-align: center;
   }
-  .co-dinh-menu {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	z-index: 1000;
-	background-color: black;
-	box-shadow: 2px 5px 5px rgb(0, 0, 0, 0.35);
+.co-dinh-menu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1000;
+    height: 94px;
+    background-color: black;
+    box-shadow: 2px 5px 5px rgb(0, 0, 0, 0.35);
 }
