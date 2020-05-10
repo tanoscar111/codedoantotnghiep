@@ -55,7 +55,6 @@ namespace QLThucTapSinh.Controllers
             }
             else
             {
-                
                 // Company
                 if (role == 2)
                 {
