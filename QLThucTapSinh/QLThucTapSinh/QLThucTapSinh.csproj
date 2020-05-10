@@ -1075,6 +1075,8 @@
     <Content Include="Views\QLTest\Question.cshtml" />
     <Content Include="Views\QLInternship\listT.cshtml" />
     <Content Include="Views\QLSchool\Edit.cshtml" />
+    <Content Include="Views\QLIntern\Create.cshtml" />
+    <Content Include="Views\QLIntern\Create1.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

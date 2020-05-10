@@ -13,20 +13,20 @@ $(function () {
         }
     });
 });
-document.getElementById('btn').onclick = function () {
-    // Khai báo tham số
-    var checkbox = document.getElementsByName('dschon');
-    var result = "";
-    // Lặp qua từng checkbox để lấy giá trị
-    for (var i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked === true) {
-            result += ' [' + checkbox[i].value + ']';
-        }
-    }
+//document.getElementById('btn').onclick = function () {
+//    // Khai báo tham số
+//    var checkbox = document.getElementsByName('dschon');
+//    var result = "";
+//    // Lặp qua từng checkbox để lấy giá trị
+//    for (var i = 0; i < checkbox.length; i++) {
+//        if (checkbox[i].checked === true) {
+//            result += ' [' + checkbox[i].value + ']';
+//        }
+//    }
 
-    // In ra kết quả
-    alert("Sở thích là: " + result);
-};
+//    // In ra kết quả
+//    alert("Sở thích là: " + result);
+//};
 $(document).ready(function () {
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();

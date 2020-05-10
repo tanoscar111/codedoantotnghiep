@@ -121,10 +121,10 @@ namespace QLThucTapSinh.Controllers
         //            return View(model);
         //        }
         //    }            
-            
+
         //}
 
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
 
             var role = Convert.ToInt32(Session["Role"].ToString());
@@ -134,7 +134,6 @@ namespace QLThucTapSinh.Controllers
                 var schoolID = Session["SchoolID"].ToString();
                 var model = (from a in database.Intern
                              join b in database.Person on a.PersonID equals b.PersonID
-                             join d in database.Users on a.PersonID equals d.PersonID
                              join e in database.Organization on b.CompanyID equals e.ID
                              where b.SchoolID == schoolID && a.InternshipID == null
                              select new InternDatabase()
@@ -153,25 +152,17 @@ namespace QLThucTapSinh.Controllers
                                  SchoolID = b.SchoolID,
                                  StudentCode = a.StudentCode,
                                  Result = a.Result,
-                                 Status = d.Status
-                             }).OrderByDescending(x => x.Result).ToList();
+                             }).OrderByDescending(x => x.CompanyID).ToList();
                 var count = model.Count();
                 return View(model);
             }
             else
             {
                 var model1 = listIShip();
-                if (id == 0)
-                {
-                    id = model1[0].InternshipID;
-                    Session["InternshipID"] = id;
-                }
                 var companyID = Session["CompanyID"].ToString();
                 var listIn = (from a in database.Person
                               join b in database.Intern on a.PersonID equals b.PersonID into joinl1
                               from j in joinl1.DefaultIfEmpty()
-                              join d in database.Users on a.PersonID equals d.PersonID into joinl2
-                              from k in joinl2.DefaultIfEmpty()
                               join f in database.Organization on a.SchoolID equals f.ID into join4
                               from p in join4.DefaultIfEmpty()
                               where a.CompanyID == companyID && a.RoleID == 5 && j.InternshipID == null
@@ -191,9 +182,8 @@ namespace QLThucTapSinh.Controllers
                                   SchoolName = p.Name,
                                   StudentCode = j.StudentCode,
                                   Result = j.Result,
-                                  Status = k.Status
                               }).ToList();
-                var model = listIn.OrderByDescending(x => x.Result).ToList();
+                var model = listIn.OrderByDescending(x => x.SchoolID).ToList();
                 var count = model.Count();
                 ViewBag.listI = model1;
                 return View(model);
@@ -225,112 +215,232 @@ namespace QLThucTapSinh.Controllers
             return model;
         }
 
-        public ActionResult Delete(string id )
+        [HttpGet]
+        public ActionResult Create()
         {
-            var model = database.Intern.Find(id);
-            database.Intern.Remove(model);
-            var model2 = database.Users.SingleOrDefault(x=>x.PersonID == id);
-            database.Users.Remove(model2);
-            var model1 = database.Person.Find(id);
-            database.Person.Remove(model1);
-            database.SaveChanges();
-            var role = Convert.ToInt32(Session["Role"].ToString());
-            int page = 1;
-            int pageSize = 5;
-            // School
-            if (role == 3)
+            var role = Convert.ToInt32(Session["Role"]);
+
+            SetViewBag();
+            SetViewBagS();
+            SetViewBagG();
+            if (role != 3)
             {
-                var schoolID = Session["SchoolID"].ToString();
-                var listPer = (from a in database.Intern
-                             join b in database.Person on a.PersonID equals b.PersonID
-                             join d in database.Users on a.PersonID equals d.PersonID
-                             join e in database.Organization on b.CompanyID equals e.ID
-                             where b.SchoolID == schoolID
-                             select new InternDatabase()
-                             {
-                                 PersonID = a.PersonID,
-                                 FullName = b.LastName + " " + b.FirstName,
-                                 Birthday = b.Birthday,
-                                 Gender = b.Gender,
-                                 Address = b.Address,
-                                 Phone = b.Phone,
-                                 Email = b.Email,
-                                 Image = b.Image,
-                                 CompanyID = b.CompanyID,
-                                 CompanyName = e.Name,
-                                 InternshipID = a.InternshipID,
-                                 SchoolID = b.SchoolID,
-                                 StudentCode = a.StudentCode,
-                                 Result = a.Result,
-                                 Status = d.Status
-                             }).OrderByDescending(x => x.Result).ToPagedList(page, pageSize);
-                return RedirectToAction("Index", listPer);
+                SetViewBagI();
+            }
+            return View();
+        }
+
+        public void SetViewBag(string selectedID = null)
+        {
+            var list = database.Person.Where(x => x.RoleID == 2).ToList();
+            List<Organization> Organ = new List<Organization>();
+            foreach (var item in list)
+            {
+                var model = database.Organization.Find(item.CompanyID);
+                Organ.Add(model);
+            }
+            SelectList OrganList = new SelectList(Organ, "ID", "Name");
+            ViewBag.OrganList = OrganList;
+        }
+
+        public void SetViewBagS(string selectedID = null)
+        {
+            var list = database.Person.Where(x => x.RoleID == 3).ToList();
+            List<Organization> Organ = new List<Organization>();
+            foreach (var item in list)
+            {
+                var model = database.Organization.Find(item.SchoolID);
+                Organ.Add(model);
+            }
+            SelectList SchoolList = new SelectList(Organ, "ID", "Name");
+            ViewBag.SchoolList = SchoolList;
+        }
+
+        public void SetViewBagG(string selectedID = null)
+        {
+            SelectList GenGender = new SelectList(new[] {
+                new {Text = "Nam", Value = true},
+                new {Text = "Nữ", Value = false},
+            }, "Value", "Text");
+            ViewBag.GenGender = GenGender;
+        }
+
+        public void SetViewBagI(string selectedID = null)
+        {
+            var role = Convert.ToInt32(Session["Role"]);
+            var list = new List<InternShip>();
+            if (role == 4)
+            {
+                var per = Session["Person"].ToString();
+                list = database.InternShip.Where(x => x.PersonID == per).ToList();
             }
             else
             {
                 var companyID = Session["CompanyID"].ToString();
-                var listIn = (from a in database.Intern
-                              join b in database.Person on a.PersonID equals b.PersonID
-                              join d in database.Users on a.PersonID equals d.PersonID
-                              join e in database.Organization on b.SchoolID equals e.ID
-                              where b.CompanyID == companyID
-                              select new InternDatabase()
-                              {
-                                  PersonID = a.PersonID,
-                                  FullName = b.LastName + " " + b.FirstName,
-                                  Birthday = b.Birthday,
-                                  Gender = b.Gender,
-                                  Address = b.Address,
-                                  Phone = b.Phone,
-                                  Email = b.Email,
-                                  Image = b.Image,
-                                  CompanyID = b.CompanyID,
-                                  InternshipID = a.InternshipID,
-                                  SchoolID = b.SchoolID,
-                                  SchoolName = e.Name,
-                                  StudentCode = a.StudentCode,
-                                  Result = a.Result,
-                                  Status = d.Status
-                              }).ToList();
-                // Company
-                if (role == 2)
-                {
-
-                    var listPer = listIn.OrderByDescending(x => x.Result).ToPagedList(page, pageSize);
-                    return RedirectToAction("Index", listPer);
-                }
-                //Ledder
-                else
-                {
-                    var personID = Session["Person"].ToString();
-                    var listPer = (from a in listIn
-                                 join b in database.InternShip on a.InternshipID equals b.InternshipID
-                                 join c in database.Person on b.PersonID equals c.PersonID
-                                 where b.PersonID == personID
-                                 select new InternDatabase()
-                                 {
-                                     PersonID = a.PersonID,
-                                     FullName = a.FullName,
-                                     Birthday = a.Birthday,
-                                     Gender = a.Gender,
-                                     Address = a.Address,
-                                     Phone = a.Phone,
-                                     Email = a.Email,
-                                     Image = a.Image,
-                                     CompanyID = a.CompanyID,
-                                     InternshipID = a.InternshipID,
-                                     SchoolID = a.SchoolID,
-                                     SchoolName = a.SchoolName,
-                                     StudentCode = a.StudentCode,
-                                     Result = a.Result,
-                                     Status = a.Status
-                                 }).OrderByDescending(x => x.Result).ToPagedList(page, pageSize);
-                    return RedirectToAction("Index", listPer);
-                }
+                list = database.InternShip.Where(x => x.CompanyID == companyID).ToList();
             }
-            
+            SelectList IList = new SelectList(list, "InternshipID", "CourseName");
+            ViewBag.IList = IList;
         }
 
+        [HttpPost]
+        public ActionResult Create(InternDatabase per)
+        {
+            if (ModelState.IsValid)
+            {
+                Person person = new Person();
+                string personID;
+                do
+                {
+                    personID = new Share().RandomText();
+                } while (new CompanyAndSchool().FindPerson(personID) == false);
+                person.PersonID = personID;
+                database.Person.Add(person);
+                person.RoleID = 5;
+                person.LastName = per.LastName;
+                person.FirstName = per.FirstName;
+                person.Birthday = per.Birthday;
+                person.Gender = per.Gender;
+                person.Address = per.Address;
+                person.Phone = per.Phone;
+                person.Email = per.Email;
+
+                var role = Convert.ToInt32(Session["Role"].ToString());
+                if (role == 3)
+                {
+                    var schoolID = Session["SchoolID"].ToString();
+                    person.SchoolID = schoolID;
+                    person.CompanyID = per.CompanyID;
+                }
+                else
+                {
+                    var companyID = Session["CompanyID"].ToString();
+                    person.SchoolID = per.SchoolID;
+                    person.CompanyID = companyID;
+                }
+
+                InsertPer(person);
+                if (SendMailTK(personID))
+                {
+                    Intern intern = new Intern();
+                    intern.PersonID = personID;
+                    intern.StudentCode = per.StudentCode;
+                    if(per.InternshipID != null)
+                    {
+                        intern.InternshipID = per.InternshipID;
+                    }
+                    intern.Result = 0;
+                    InsertInt(intern);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var model = database.Organization.SingleOrDefault(x => x.ID == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Organization organi)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var model1 = new CompanyAndSchool().Update(organi);
+                if (model1)
+                {
+                    var modle = new Share().listOrgan(2).OrderByDescending(x => x.StartDay).ToList();
+                    return RedirectToAction("Index", modle);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhật thất bại");
+                }
+            }
+            return View("Edit");
+        }
+
+        public ActionResult Delete(string id)
+        {
+            var model = database.Intern.Find(id);
+            database.Intern.Remove(model);
+            var model2 = database.Users.SingleOrDefault(x => x.PersonID == id);
+            if (model2 != null)
+            {
+                database.Users.Remove(model2);
+            }
+            var model1 = database.Person.Find(id);
+            database.Person.Remove(model1);
+            database.SaveChanges();
+            return RedirectToAction("Index", new { id = 0 });
+        }
+
+        public ActionResult Delete1(string id, int ins)
+        {
+            var companyID = Session["CompanyID"].ToString();
+            var listIn = (from a in database.Intern
+                          join b in database.Person on a.PersonID equals b.PersonID
+                          join d in database.Users on a.PersonID equals d.PersonID
+                          join e in database.Organization on b.SchoolID equals e.ID
+                          where b.CompanyID == companyID
+                          select new InternDatabase()
+                          {
+                              PersonID = a.PersonID,
+                              FullName = b.LastName + " " + b.FirstName,
+                              Birthday = b.Birthday,
+                              Gender = b.Gender,
+                              Address = b.Address,
+                              Phone = b.Phone,
+                              Email = b.Email,
+                              Image = b.Image,
+                              CompanyID = b.CompanyID,
+                              InternshipID = a.InternshipID,
+                              SchoolID = b.SchoolID,
+                              SchoolName = e.Name,
+                              StudentCode = a.StudentCode,
+                              Result = a.Result,
+                              Status = d.Status
+                          }).ToList();
+            var role = Convert.ToInt32(Session["Role"].ToString());
+            // Company
+            if (role == 2)
+            {
+
+                var listPer = listIn.OrderByDescending(x => x.Result).ToList();
+                return RedirectToAction("Index", listPer);
+            }
+            //Ledder
+            else
+            {
+                var personID = Session["Person"].ToString();
+                var listPer = (from a in listIn
+                               join b in database.InternShip on a.InternshipID equals b.InternshipID
+                               join c in database.Person on b.PersonID equals c.PersonID
+                               where b.PersonID == personID
+                               select new InternDatabase()
+                               {
+                                   PersonID = a.PersonID,
+                                   FullName = a.FullName,
+                                   Birthday = a.Birthday,
+                                   Gender = a.Gender,
+                                   Address = a.Address,
+                                   Phone = a.Phone,
+                                   Email = a.Email,
+                                   Image = a.Image,
+                                   CompanyID = a.CompanyID,
+                                   InternshipID = a.InternshipID,
+                                   SchoolID = a.SchoolID,
+                                   SchoolName = a.SchoolName,
+                                   StudentCode = a.StudentCode,
+                                   Result = a.Result,
+                                   Status = a.Status
+                               }).OrderByDescending(x => x.Result).ToList();
+                return RedirectToAction("Index", listPer);
+            }
+        }
         [HttpGet]
         public ActionResult imPortExcel()
         {
@@ -363,7 +473,7 @@ namespace QLThucTapSinh.Controllers
                     //Lặp lại qua các hàng và cột và in ra bàn điều khiển khi nó xuất hiện trong tệp
                     //excel is not zero based!!
                     var role = Convert.ToInt32(Session["Role"].ToString());
-                    if(role == 3)
+                    if (role == 3)
                     {
                         var schoolID = Session["SchoolID"].ToString();
                         for (int i = 2; i < range.Rows.Count; i++)
@@ -388,7 +498,7 @@ namespace QLThucTapSinh.Controllers
                             person.CompanyID = organID;
                             person.RoleID = 5;
                             //listproducts.Add(product);
-                            
+
                             InsertPer(person);
                             if (SendMailTK(personID))
                             {
@@ -398,7 +508,7 @@ namespace QLThucTapSinh.Controllers
                                 intern.Result = 0;
                                 InsertInt(intern);
                             }
-                                
+
                         }
                     }
                     else
@@ -437,10 +547,10 @@ namespace QLThucTapSinh.Controllers
                                 intern.Result = 0;
                                 InsertInt(intern);
                             }
-                            
+
                         }
                     }
-                    
+
                     //cleanup
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
@@ -524,7 +634,7 @@ namespace QLThucTapSinh.Controllers
 
         public bool ChangeStatusPer(string id)
         {
-            var com = database.Users.SingleOrDefault(x=>x.PersonID ==id);
+            var com = database.Users.SingleOrDefault(x => x.PersonID == id);
             if (com.Status == true)
             {
                 com.Status = false;

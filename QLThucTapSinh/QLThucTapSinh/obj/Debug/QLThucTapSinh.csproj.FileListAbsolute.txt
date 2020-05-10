@@ -427,3 +427,4 @@ C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\b
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\bin\Antlr3.Runtime.pdb
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.csproj.CopyComplete
+C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.csprojAssemblyReference.cache
