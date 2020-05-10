@@ -348,6 +348,7 @@
     <Content Include="Scripts\Controller\CompanyController.js" />
     <Content Include="Scripts\Controller\IntershipController.js" />
     <Content Include="Scripts\Controller\QLTaskControl.js" />
+    <Content Include="Scripts\Controller\SchoolController.js" />
     <Content Include="Scripts\Controller\TaskController1.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\datatables.min.js" />
@@ -1073,6 +1074,7 @@
     <Content Include="Views\QLTest\Index.cshtml" />
     <Content Include="Views\QLTest\Question.cshtml" />
     <Content Include="Views\QLInternship\listT.cshtml" />
+    <Content Include="Views\QLSchool\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

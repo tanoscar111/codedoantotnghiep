@@ -59,7 +59,15 @@ namespace QLThucTapSinh.Common
 
         public void ChangesStatusOrgan(string id, int role, bool status)
         {
-            var findP = database.Person.SingleOrDefault(x => x.CompanyID == id && x.RoleID == role);
+            var findP = new Person();
+            if (role == 2)
+            {
+                findP = database.Person.SingleOrDefault(x => x.CompanyID == id && x.RoleID == role);
+            }
+            else
+            {
+                findP = database.Person.SingleOrDefault(x => x.SchoolID == id && x.RoleID == role);
+            }
             var findU = database.Users.SingleOrDefault(x => x.PersonID == findP.PersonID);
             if (findU != null)
             {
