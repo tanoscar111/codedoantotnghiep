@@ -52,7 +52,7 @@ namespace QLThucTapSinh.Controllers
                             // Admin = 1
                             if (role.RoleID == 1)
                             {
-                                return RedirectToAction("Index", "QLCompany");
+                                return RedirectToAction("TTcanhan1", "QLPerson");
                             }
                             else
                             {
@@ -68,14 +68,14 @@ namespace QLThucTapSinh.Controllers
                                     if (role.RoleID == 3)
                                     {
                                         Session["SchoolID"]= role.SchoolID;
-                                        return RedirectToAction("Index", "QLIntern");
+                                        return RedirectToAction("TTcanhan1", "QLPerson");
                                     }
                                     else
                                     {
                                         Session["CompanyID"] = role.CompanyID;
                                         if (role.RoleID == 2)
                                         {
-                                            return RedirectToAction("Index", "QLIntern");
+                                            return RedirectToAction("TTcanhan1", "QLPerson");
                                         }
                                         else
                                         {

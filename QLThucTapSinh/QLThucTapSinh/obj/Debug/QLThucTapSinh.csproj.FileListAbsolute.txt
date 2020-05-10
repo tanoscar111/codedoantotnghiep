@@ -342,7 +342,6 @@ C:\Users\Tan\Desktop\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLT
 C:\Users\Tan\Desktop\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.csproj.CopyComplete
 C:\Users\Tan\Desktop\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.dll
 C:\Users\Tan\Desktop\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.pdb
-C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.csprojAssemblyReference.cache
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.csproj.CoreCompileInputs.cache
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.dll
 C:\Users\Lanh\Desktop\New folder\codedoantotnghiep\QLThucTapSinh\QLThucTapSinh\obj\Debug\QLThucTapSinh.pdb
