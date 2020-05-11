@@ -144,6 +144,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\CompanyAndSchool.cs" />
     <Compile Include="Common\InternDatabase.cs" />
+    <Compile Include="Common\Internshipclass.cs" />
     <Compile Include="Common\MaHoaMd5.cs" />
     <Compile Include="Common\QuestionClass.cs" />
     <Compile Include="Common\RestartPassword.cs" />
@@ -1077,6 +1078,7 @@
     <Content Include="Views\QLSchool\Edit.cshtml" />
     <Content Include="Views\QLIntern\Create.cshtml" />
     <Content Include="Views\QLIntern\Create1.cshtml" />
+    <Content Include="Views\QLIntern\ListIntern.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -283,6 +283,170 @@ namespace QLThucTapSinh.Controllers
             ViewBag.IList = IList;
         }
 
+        public List<Internshipclass> listInternship()
+        {
+            var role = Convert.ToInt32(Session["Role"]);
+            var model = new List<Internshipclass>();
+            if (role == 3)
+            {
+                var schoolID = Session["SchoolID"].ToString();
+                //var company = database.Person.Where(x => x.SchoolID == schoolID && x.RoleID == 5).ToList();
+                //// lấy danh sách Thực tập sinh của trường
+                //List<string> com = new List<string>();
+                //foreach (var item in company)
+                //{
+                //    com.Add(item.CompanyID);
+                //}
+                //// Lấy danh sách Công ty mà tất cả thực tập sinh đang thực tập
+                //IEnumerable<string> comp = com.Distinct();
+                //// Xóa các công ty bị lập lại
+                //List<InternShip> ListInternShip = new List<InternShip>();
+                //foreach (var item in comp)
+                //{
+                //    var list = database.InternShip.Where(x => x.CompanyID == item).ToList();
+                //    ListInternShip.InsertRange(ListInternShip.Count, list);
+                //}
+                // Lấy danh sách InternShip của  các công ty
+
+                var list = (from a in database.Person
+                         join c in database.Intern on a.PersonID equals c.PersonID
+                         join b in database.InternShip on c.InternshipID equals b.InternshipID
+                         join d in database.Organization on b.CompanyID equals d.ID
+                         where a.SchoolID == schoolID && a.RoleID == 5
+                         select new Internshipclass()
+                         {
+                             InternshipID = b.InternshipID,
+                             CourseName = b.CourseName,
+                             PersonID = b.PersonID,
+                             FullName = a.LastName + " " + a.FirstName,
+                             CompanyID = b.CompanyID,
+                             Name = d.Name,
+                             StartDay = b.StartDay,
+
+                         }).OrderByDescending(x => x.StartDay).ToList();
+                var list1 = new List<Internshipclass>();
+                var idin = list[0].InternshipID;
+                list1.Add( list[0]);
+                for (int i =0; i< list.Count(); i++)
+                {
+                    if(idin != list[i].InternshipID)
+                    {
+                        if (list1.Contains(list[i]) == false)
+                        {
+                            list1.Add(list[i]);
+                            idin = list[i].InternshipID;
+                        }
+                    }
+                }
+                model = list1.ToList();
+            }
+            else
+            {
+                if (role == 2)
+                {
+                    var companyID = Session["CompanyID"].ToString();
+                    model = (from a in database.InternShip
+                             join c in database.Person on a.PersonID equals c.PersonID
+                             join b in database.Organization on a.CompanyID equals b.ID
+                             where a.CompanyID == companyID
+                             select new Internshipclass()
+                             {
+                                 InternshipID = a.InternshipID,
+                                 CourseName = a.CourseName,
+                                 PersonID = c.PersonID,
+                                 FullName = c.LastName + " " + c.FirstName,
+                                 CompanyID = a.CompanyID,
+                                 Name = b.Name,
+                                 StartDay = a.StartDay,
+
+                             }).OrderByDescending(x => x.StartDay).ToList();
+                }
+                else
+                {
+                    var per = Session["Person"].ToString();
+                    model = (from a in database.InternShip
+                             join c in database.Organization on a.CompanyID equals c.ID
+                             where a.PersonID == per
+                             select new Internshipclass()
+                             {
+                                 InternshipID = a.InternshipID,
+                                 CourseName = a.CourseName,
+                                 CompanyID = a.CompanyID,
+                                 Name = c.Name,
+                                 StartDay = a.StartDay,
+                             }).OrderByDescending(x => x.StartDay).ToList();
+                }
+            }
+            return model;
+        }
+
+        public ActionResult ListIntern(int id)
+        {
+            var model = listInternship();
+            var idin = model[0].InternshipID;
+            if (id == 0)
+            {
+                var listIn = (from a in database.Person
+                              join b in database.Intern on a.PersonID equals b.PersonID into joinl1
+                              from j in joinl1.DefaultIfEmpty()
+                              join f in database.Organization on a.SchoolID equals f.ID into join4
+                              from p in join4.DefaultIfEmpty()
+                              where j.InternshipID == idin && a.RoleID == 5
+                              select new InternDatabase()
+                              {
+                                  PersonID = a.PersonID,
+                                  FullName = a.LastName + " " + a.FirstName,
+                                  Birthday = a.Birthday,
+                                  Gender = a.Gender,
+                                  Address = a.Address,
+                                  Phone = a.Phone,
+                                  Email = a.Email,
+                                  Image = a.Image,
+                                  CompanyID = a.CompanyID,
+                                  InternshipID = j.InternshipID,
+                                  SchoolID = a.SchoolID,
+                                  SchoolName = p.Name,
+                                  StudentCode = j.StudentCode,
+                                  Result = j.Result,
+                              }).ToList();
+                var model1 = listIn.OrderByDescending(x => x.Result).ToList();
+                var count = model.Count();
+                ViewBag.ListInternship = model;
+                return View(model1);
+            }
+            else
+            {
+                var listIn = (from a in database.Person
+                              join b in database.Intern on a.PersonID equals b.PersonID into joinl1
+                              from j in joinl1.DefaultIfEmpty()
+                              join f in database.Organization on a.SchoolID equals f.ID into join4
+                              from p in join4.DefaultIfEmpty()
+                              where j.InternshipID == id && a.RoleID == 5
+                              select new InternDatabase()
+                              {
+                                  PersonID = a.PersonID,
+                                  FullName = a.LastName + " " + a.FirstName,
+                                  Birthday = a.Birthday,
+                                  Gender = a.Gender,
+                                  Address = a.Address,
+                                  Phone = a.Phone,
+                                  Email = a.Email,
+                                  Image = a.Image,
+                                  CompanyID = a.CompanyID,
+                                  InternshipID = j.InternshipID,
+                                  SchoolID = a.SchoolID,
+                                  SchoolName = p.Name,
+                                  StudentCode = j.StudentCode,
+                                  Result = j.Result,
+                              }).ToList();
+                var model1 = listIn.OrderByDescending(x => x.Result).ToList();
+                var count = model.Count();
+                ViewBag.ListInternship = model;
+                return View(model1);
+            }
+            
+        }
+
         [HttpPost]
         public ActionResult Create(InternDatabase per)
         {
@@ -325,7 +489,7 @@ namespace QLThucTapSinh.Controllers
                     Intern intern = new Intern();
                     intern.PersonID = personID;
                     intern.StudentCode = per.StudentCode;
-                    if(per.InternshipID != null)
+                    if (per.InternshipID != null)
                     {
                         intern.InternshipID = per.InternshipID;
                     }
