@@ -53,4 +53,38 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.btn-task').click(function (e) {
+        // Khai báo tham số
+        e.preventDefault();
+        var checkbox = document.getElementsByName('dschon');
+        var listIntern = [];
+        var count = 0;
+        var id = $(this).data('id');
+        // Lặp qua từng checkbox để lấy giá trị
+        for (var i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked === true) {
+
+                listIntern[count] = checkbox[i].value;
+                count++;
+            }
+        }
+        $.ajax({
+            url: '/QLIntern/AddIntern',
+            traditional: true,
+            data: {
+                listIntern: listIntern,
+                id: id,
+            },
+            type: "GET",
+            success: function (response) {
+                if (response == 'False') {
+                    alert("Thêm Bài học thất bại");
+                } else {
+                    window.location.href = '/QLIntern/Index1';    
+                    alert("Thêm Bài học thành công");
+                }
+            }
+        });
+    });
 });

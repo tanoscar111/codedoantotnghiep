@@ -21,8 +21,7 @@
         <a href="/QLIntern/ListIntern/0" class="notIntership btn btn-outline btn-primary">Danh sách Thực tập sinh</a>
     </h1>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
-    @if (@Session["Role"].ToString() == "3")
-    {
+
         <div class="dataTable_wrapper">
             <table class="table table-striped table-bordered table-hover" id="table">
                 <thead>
@@ -46,7 +45,7 @@
                                 <td>@item.CompanyName</td>
                                 <td>@item.Email</td>
                                 <td>@item.Phone</td>
-                                <td> <a @*href="/QLInterns/Edit/@item.InternsID"*@ class="btn btn-outline btn-primary">Sửa</a> </td>
+                                <td> <a href="/QLIntern/Edit/@item.PersonID" class="btn btn-outline btn-primary">Sửa</a> </td>
                                 <td><a href="/QLIntern/Delete/@item.PersonID" class="btn btn-outline btn-primary">Xóa</a> </td>
                             </tr>
                         }
@@ -54,71 +53,7 @@
                 </tbody>
             </table>
         </div>
-    }
-    else
-    {
-        <div class="dataTable_wrapper">
-            <table class="table table-striped table-bordered table-hover" id="table">
-                <thead>
-                    <tr>
-                        <th class="text-center"><input type="checkbox" id="checkAll" /></th>
-                        <th class="text-center">Họ và tên</th>
-                        <th class="text-center">Nhà trường</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Phone</th>
-                    </tr>
-                </thead>
-                <tbody id="myTable">
-                    @foreach (var item in Model)
-                    {
-                        {
-                            <tr>
-                                <td class="text-center"><input name="dschon" type="checkbox" value="@item.PersonID" /> </td>
-                                <td>@item.FullName</td>
-                                <td>@item.SchoolName </td>
-                                <td>@item.Email</td>
-                                <td>@item.Phone</td>
-                            </tr>
-                        }
 
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <div>
-
-
-        </div>
-        <div class="col-md-5 ban2">
-            <div class="row">
-                <h2 style="width: 100%;
-                    text-align: center;">
-                    Danh sách bài học
-                </h2>
-                @ViewBag.ERR
-                <table class="table ble" style="margin-left: 47px">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Danh sách bài học</th>
-                        </tr>
-                    </thead>
-                    <tbody id="myTable1">
-                        @foreach (var item in internShips)
-                        {
-                            {
-                                <tr>
-                                    <td><a href="">@item.CourseName</a></td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-    }
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>

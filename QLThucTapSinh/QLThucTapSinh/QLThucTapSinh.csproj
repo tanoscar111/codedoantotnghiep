@@ -151,6 +151,7 @@
     <Compile Include="Common\Share.cs" />
     <Compile Include="Common\TaskClass.cs" />
     <Compile Include="Common\TaskDatabase.cs" />
+    <Compile Include="Common\TestResultsClass.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\QLCompanyController.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Content\Home\index5.css" />
     <Content Include="Content\Home\nav.css" />
     <Content Include="Content\Home\style.css" />
+    <Content Include="Content\Home\styleCV.css" />
     <Content Include="Content\Home\styleDangki.css" />
     <Content Include="Content\Intership.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
@@ -318,6 +320,7 @@
     <Content Include="img\trainer\28617145_2032586016965377_3029889264502680104_o.jpg" />
     <Content Include="img\trainer\about-trainer-2.jpg" />
     <Content Include="img\trainer\about-trainer-3.jpg" />
+    <Content Include="img\trainer\hinhavatar.jpg" />
     <Content Include="img\trainer\trainer-1.jpg" />
     <Content Include="img\trainer\trainer-2.jpg" />
     <Content Include="img\trainer\trainer-3.jpg" />
@@ -1079,6 +1082,9 @@
     <Content Include="Views\QLIntern\Create.cshtml" />
     <Content Include="Views\QLIntern\Create1.cshtml" />
     <Content Include="Views\QLIntern\ListIntern.cshtml" />
+    <Content Include="Views\QLIntern\CVIntern.cshtml" />
+    <Content Include="Views\QLIntern\Index1.cshtml" />
+    <Content Include="Views\QLIntern\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

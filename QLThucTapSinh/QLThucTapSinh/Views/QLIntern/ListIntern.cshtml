@@ -13,13 +13,17 @@
 <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
 <link href="~/Content/Quanli/style.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 <script src="@Url.Content("~/Scripts/Plugins/jquery-1.10.2.js")" type="text/javascript"></script>
 
-<div class="text-primary" style="text-align:center"> DANH SÁCH KHÓA HỌC</div>
+<div class="text-primary" style="text-align:center"> DANH SÁCH THỰC TẬP SINH</div>
 <h1 class="page-header">
-    <a href="/QLCompany/Create" class="btn btn-outline btn-primary">Thêm</a>
+    <a href="/QLIntern/Create" id="them" class="them btn btn-outline btn-primary">Thêm</a>
+    <a href="/QLIntern/imPortExcel" id="them" class="them btn btn-outline btn-primary">Thêm File Excel</a>
+    <a href="/QLIntern/ListIntern/0" class="notIntership btn btn-outline btn-primary">Danh sách Thực tập sinh</a>
 </h1>
+
 <input class="form-control" id="myInput" type="text" placeholder="Search..">
 <script>
     $(document).ready(function () {
@@ -89,6 +93,7 @@
                         <th>Địa chỉ</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Kết quả</th>
                         @if (@Session["Role"].ToString() == "4")
                         {
                             <th>Xóa</th>
@@ -98,16 +103,17 @@
                 <tbody id="myTable">
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td><a href="" class="intership" data-intership="@item.InternshipID">@item.FullName</a></td>
-                            <td>@item.Address</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Email</td>
-                            @if (@Session["Role"].ToString() == "4")
-                            {
-                                <td><a href="/in/Delete/@item.InternshipID" class="btn btn-outline btn-primary">Xóa</a></td>
-                            }
-                        </tr>
+                    <tr>
+                        <td><a href="/QLIntern/CVIntern/@item.PersonID" class="intership" data-intership="@item.InternshipID">@item.FullName</a></td>
+                        <td>@item.Address</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Email</td>
+                        <td>@item.Result</td>
+                        @if (@Session["Role"].ToString() == "4")
+                        {
+                            <td><a href="/QLIntern/Delete/@item.PersonID" class="btn btn-outline btn-primary">Xóa</a></td>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -128,44 +134,37 @@
                 <thead>
                     <tr>
                         <th>Khóa học</th>
-                        @if (@Session["Role"].ToString() == "2")
+                        @if (@Session["Role"].ToString() != "4")
                         {
                             <th>Quản lý</th>
-                        }
-                        else
-                        {
-                            if (@Session["Role"].ToString() == "3")
-                            {
-                                <th>Công ty</th>
-                            }
-
                         }
                     </tr>
                 </thead>
                 <tbody id="myTable1">
                     @foreach (var item in internShips)
                     {
-                    <td><a href="/QLIntern/ListIntern/@item.InternshipID">@item.CourseName</a></td>
-                    if (@Session["Role"].ToString() == "2")
-                    {
-                        <td><a href="">@item.FullName</a></td>
-                    }
-                    else
-                    {
-                        if (@Session["Role"].ToString() == "3")
                         {
-                            <td><a href="">@item.Name</a></td>
+                            <tr>
+                                <td><a href="/QLIntern/ListIntern/@item.InternshipID">@item.CourseName</a></td>
+                                @if (@Session["Role"].ToString() == "2")
+                                {
+                                <td><a href="">@item.FullName</a></td>
+                                }
+                                else if(@Session["Role"].ToString() == "3")
+                                {
+                                <td><a href="">@item.Name</a></td>
+                                }
+                            </tr>
                         }
+
                     }
+                </tbody>
 
-                }
-                    </tbody>
-
-                </table>
-            </div>
+            </table>
         </div>
-
     </div>
-    <script src="https://kit.fontawesome.com/e00695e77f.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</div>
+<script src="https://kit.fontawesome.com/e00695e77f.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>

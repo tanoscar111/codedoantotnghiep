@@ -45,16 +45,16 @@
                     @foreach (var item in Model)
                     {
                         {
-                    <tr>
-                        <td class="text-center"><input name="dschon" type="checkbox" value="@item.TaskID" </td>
-                        <td>@item.TaskName</td>
-                        @if (@Session["Role"].ToString() == "2")
-                        {
-                        <td>@item.FullName</td>
-                        }
-                        <td><a href="/QLTask/Edit/@item.TaskID" class="btn btn-outline btn-primary">Sửa</a></td>
-                        <td><a href="/QLTask/Delete/@item.TaskID" class="btn btn-outline btn-primary">Xóa</a></td>
-                    </tr>
+                            <tr>
+                                <td class="text-center"><input name="dschon" type="checkbox" value="@item.TaskID" </td>
+                                <td>@item.TaskName</td>
+                                @if (@Session["Role"].ToString() == "2")
+                                {
+                                    <td>@item.FullName</td>
+                                }
+                                <td><a href="/QLTask/Edit/@item.TaskID" class="btn btn-outline btn-primary">Sửa</a></td>
+                                <td><a href="/QLTask/Delete/@item.TaskID" class="btn btn-outline btn-primary">Xóa</a></td>
+                            </tr>
                         }
                     }
                 </tbody>
@@ -73,14 +73,17 @@
                             <th>Danh sách khóa học</th>
                         </tr>
                     </thead>
+                    @{ int i = 1;}
                     @foreach (var item in intership)
                     {
+                        var dem = i;
                         {
                             <tr>
-                                <td></td>
+                                <td>@dem</td>
                                 <td><a href="#" class="btn-task" data-id="@item.InternshipID">@item.CourseName</a></td>
                             </tr>
                         }
+                        i++;
                     }
 
                 </table>
